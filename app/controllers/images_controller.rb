@@ -12,13 +12,14 @@ class ImagesController < ApplicationController
   # GET /images/1.json
   def show
     if (@post.user.id != current_user.id)
-      redirect_to posts_path
+      redirect_to images_path
     end
   end
 
   # GET /images/new
   def new
     @image = Image.new
+    @image.user = current_user
   end
 
   # GET /images/1/edit
@@ -29,7 +30,6 @@ class ImagesController < ApplicationController
   # POST /images.json
   def create
     @image = Image.new(image_params)
-    @image.user = current_user
 
     respond_to do |format|
       if @image.save
