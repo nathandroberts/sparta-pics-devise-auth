@@ -1,15 +1,19 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /images
   # GET /images.json
   def index
-    @images = Image.all
+    @images = current_user.images
   end
 
   # GET /images/1
   # GET /images/1.json
   def show
+    if (@post.user.id != current_user.id)
+      redirect_to posts_path
+    end
   end
 
   # GET /images/new
